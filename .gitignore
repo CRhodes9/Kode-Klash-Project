@@ -332,3 +332,10 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+*.sln
+GameClient/GameClient/App.config
+*.csproj
+GameServer/GameServer/App.config
+GameClient/GameClient/Properties/AssemblyInfo.cs
+*.config
+GameServer/GameServer/Properties/AssemblyInfo.cs
