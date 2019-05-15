@@ -44,7 +44,7 @@ namespace GameServer.Sequences
             }
             catch (FileNotFoundException)
             {
-                Server.Log("Enemy File Doesn't Exist! (" + player.UserID + ")");
+                GameServer.Log("Enemy File Doesn't Exist! (" + player.UserID + ")");
                 currentEnemy = new Enemy();
                 File.Create(AppDomain.CurrentDomain.BaseDirectory + "\\Players\\" + player.UserID + "\\currentenemy.json").Close();
                 SetCurrentEnemy(player, currentEnemy);

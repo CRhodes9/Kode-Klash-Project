@@ -7,20 +7,35 @@ using System.Threading;
 
 namespace GameServer
 {
-    public class Server
+    public class GameServer
     {
+        public static Leaderboard leaderboard = new Leaderboard();
+
         public static ManualResetEvent allDone = new ManualResetEvent(false);
 
         public static bool stopped = false;
 
         public static void Main()
         {
+            leaderboard.Refresh();
+
+            Thread thread = new Thread(LeaderboardUpdate);
+
             StartListening();
+        }
+
+        public static void LeaderboardUpdate()
+        {
+            while (DateTime.Today.TimeOfDay.Ticks != 0)
+            {
+                Thread.Sleep(1);
+            }
+            leaderboard.Refresh();
         }
 
         public static void Log(string mes)
         {
-            StreamWriter sw = new StreamWriter(String.Format("{0}\\Logs\\{1}-{2}-{3}.log", AppDomain.CurrentDomain.BaseDirectory, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day), true);
+            StreamWriter sw = new StreamWriter(string.Format("{0}\\Logs\\{1}-{2}-{3}.log", AppDomain.CurrentDomain.BaseDirectory, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day), true);
             sw.Write("[" + DateTime.Now.TimeOfDay + "] " + mes + "\n");
             sw.Close();
             Console.WriteLine(mes);
@@ -38,7 +53,7 @@ namespace GameServer
             {
                 listener.Bind(localEndPoint);
                 listener.Listen(100);
-
+                Log("Game Server started!");
                 while (stopped == false)
                 {
                     allDone.Reset();
@@ -52,7 +67,7 @@ namespace GameServer
                 Log(e.ToString());
             }
 
-            Log("Stopped Server..");
+            Log("Stopped Server!");
             Console.Read();
         }
 
@@ -91,12 +106,17 @@ namespace GameServer
 
                 if (bytesRead > 0)
                 {
-                    state.sb.Append(Encoding.ASCII.GetString(
-                        state.buffer, 0, bytesRead));
+                    state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
 
-                    content = state.sb.ToString().Split();
-
-                    Send(handler, CommandHandler.Process(handler.RemoteEndPoint.ToString(), content));
+                    content = state.sb.ToString().Split(new string[] { "%%" }, StringSplitOptions.None);
+                    if (content[1] == "logout")
+                    {
+                        handler.Close();
+                    }
+                    else
+                    {
+                        Send(handler, CommandHandler.Process(handler.RemoteEndPoint.ToString(), content));
+                    }
 
                 }
             }

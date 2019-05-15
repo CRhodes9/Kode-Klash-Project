@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using GameServer.Sequences;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace GameServer
 {
@@ -14,7 +16,7 @@ namespace GameServer
         public static string Process(string address, string[] command)
         {
             Player player;
-            string playerStatsJson = "";
+            string playerStatsJson;
             string path = AppDomain.CurrentDomain.BaseDirectory + "\\Players\\" + command[0];
             try
             {
@@ -32,19 +34,19 @@ namespace GameServer
             }
             catch (DirectoryNotFoundException)
             {
-                Server.Log("Player Doesn't Exist! (" + command[0] + "). Creating a new file.");
-                player = new Player(command[0]);
-
-                Directory.CreateDirectory(path);
-                File.Create(path + "\\stats.json").Close();
-                SaveJson(command[0], player);
+                response = "Invalid Username!";
+                return response;
             }
 
 
             if (command[1] == "LOGIN")
             {
                 response = Login(command, player, address);
-                player.SetSequence("TWN1");
+            }
+            else if (command[1].ToLower() == "leaderboard")
+            {
+                int i = 1;
+                GameServer.leaderboard.TopTen.ForEach(p => response += string.Format("\n{0}. {1}({2}) {3} ({4}exp)", i++, p.Name, p.UserID, p.Level, p.Experience));
             }
             else
             {
@@ -52,12 +54,18 @@ namespace GameServer
                 {
                     Sequence sequence = (Sequence)Activator.CreateInstance(Type.GetType("GameServer.Sequences." + player.Sequence.Substring(0, 3)), player, command);
                     response = sequence.Response;
+                    player.LastCommand = command;
+                    player.LastResponse = sequence.Response;
+                    response += string.Format("%%{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}/{9}/{10}/{11}/{12}/{13}%%", player.Name, player.Level, player.Experience, player.Gold, player.MaxHealth, player.CurrentHealth, player.MaxMana, player.CurrentMana, player.Strength, player.Dexterity, player.Constitution, player.Intelligence, player.Wisdom, player.Charisma);
+                    player.Items.ForEach(i => response += i.Name + "/");
+                    response += "%%";
+                    player.Spells.ForEach(s => response += s.Name + "/");
                 }
                 catch (ArgumentNullException)
                 {
                     string error = "Error getting sequence! Setting to 'TWN1'. Contact an Admin if this continues. Player ID: " + player.UserID + " Sequence: " + player.Sequence.Substring(0, 3);
                     response += error;
-                    Server.Log(error);
+                    GameServer.Log(error);
                     player.SetSequence("TWN1");
                 }
             }
@@ -69,12 +77,16 @@ namespace GameServer
         private static string Login(string[] command, Player player, string address)
         {
             string response;
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\Players\\" + command[0] + "\\stats.json"))
+            using (MD5 md5Hash = MD5.Create())
             {
-                Server.Log("Logged in " + player.Name + "(" + command[0] + ")" + "{" + address + "}");
-                if (player.FirstTime == true)
+                string hash = GetMd5Hash(md5Hash, command[2]);
+
+                if (VerifyMd5Hash(md5Hash, command[2], player.Password))
                 {
-                    response = "Success!" + 
+                    GameServer.Log("Logged in " + player.Name + "(" + command[1] + ")" + "{" + address + "}");
+                    if (player.FirstTime == true)
+                    {
+                        response = "Success!%%" +
 @"-----------------------------------------------------------------
 |                                                               |
 |                                                               |
@@ -84,10 +96,14 @@ namespace GameServer
 |                                                               |
 |                                                               |
 -----------------------------------------------------------------" + "\n\nPlease enter your name: ";
-                }
-                else
-                {
-                    response = "Success!" + 
+                        response += string.Format("%%{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}/{9}/{10}/{11}/{12}/{13}%%", player.Name, player.Level, player.Experience, player.Gold, player.MaxHealth, player.CurrentHealth, player.MaxMana, player.CurrentMana, player.Strength, player.Dexterity, player.Constitution, player.Intelligence, player.Wisdom, player.Charisma);
+                        player.Items.ForEach(i => response += i.Name + "/");
+                        response += "%%";
+                        player.Spells.ForEach(s => response += s.Name + "/");
+                    }
+                    else
+                    {
+                        response = "Success!%%" +
 @"-----------------------------------------------------------------
 |                                                               |
 |                                                               |
@@ -99,27 +115,61 @@ namespace GameServer
 -----------------------------------------------------------------" + "\n\n";
 
 
-                    try
-                    {
-                        Sequence sequence = (Sequence)Activator.CreateInstance(Type.GetType("GameServer.Sequences." + player.Sequence.Substring(0, 3)), player, command);
-                        response += sequence.Response;
+                        try
+                        {
+                            response += player.LastResponse;
+                            Sequence sequence = (Sequence)Activator.CreateInstance(Type.GetType("GameServer.Sequences." + player.Sequence.Substring(0, 3)), player, command);
+                            player.LastCommand = command;
+                            player.LastResponse = sequence.Response;
+                            response += sequence.Response;
+                            response += string.Format("%%{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}/{9}/{10}/{11}/{12}/{13}%%", player.Name, player.Level, player.Experience, player.Gold, player.MaxHealth, player.CurrentHealth, player.MaxMana, player.CurrentMana, player.Strength, player.Dexterity, player.Constitution, player.Intelligence, player.Wisdom, player.Charisma);
+                            player.Items.ForEach(i => response += i.Name + "/");
+                            response += "%%";
+                            player.Spells.ForEach(s => response += s.Name + "/");
+                        }
+                        catch (ArgumentNullException)
+                        {
+                            string error = "Error getting sequence! Setting to 'TWN1'. Contact an Admin if this continues. Player ID: " + player.UserID + " Sequence: " + player.Sequence.Substring(0, 3);
+                            response += error;
+                            GameServer.Log(error);
+                            player.SetSequence("TWN1");
+                        };
                     }
-                    catch (ArgumentNullException )
-                    {
-                        string error = "Error getting sequence! Setting to 'TWN1'. Contact an Admin if this continues. Player ID: " + player.UserID + " Sequence: " + player.Sequence.Substring(0, 3);
-                        response += error;
-                        Server.Log(error);
-                        player.SetSequence("TWN1");
-                    };
                 }
-            }
-            else
-            {
-                response = "Failed Login!";
+                else
+                {
+                    response = "Failure!";
+                }
             }
             return response;
         }
 
+        private static string GetMd5Hash(MD5 md5Hash, string text)
+        {
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(text));
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                sb.Append(data[i].ToString("X2"));
+            }
+
+            return sb.ToString();
+        }
+
+        private static bool VerifyMd5Hash(MD5 md5Hash, string text, string hash)
+        {
+            string hashOfText = GetMd5Hash(md5Hash, text);
+
+            if (hashOfText == hash)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         private static void SaveJson(string userId, Player player)
         {
             StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\Players\\" + userId + "\\stats.json", false);

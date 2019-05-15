@@ -56,7 +56,7 @@ namespace GameServer.Sequences
                         case "b":
                         case "blacksmith":
                             Response = "You walk up to the Blacksmith. As you approach, you hear the clanging of metal on metal, and feel the heat of the forge." +
-                                "\nPress Enter to continue...";
+                                "\n(E)nter";
                             player.SetSequence("BSM1");
                             break;
                         case "a":

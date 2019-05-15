@@ -61,14 +61,14 @@ namespace GameServer.Sequences
                     string combatResponse = Combat(command, ref player, currentEnemy);
                     Response = combatResponse;
 
-                    if (combatResponse.StartsWith("\nYou won! ", StringComparison.InvariantCultureIgnoreCase))
+                    if (combatResponse.StartsWith("You won! ", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        Response += "Inform the player of after-fight results." +
-                            "\nDon't forget to prompt them for the next choice after the fight is finished!";
+                        Response += combatResponse;
                         player.SetSequence("FST4");
                     }
                     else if (combatResponse.StartsWith("You escaped ", StringComparison.InvariantCultureIgnoreCase))
                     {
+                        Response += combatResponse;
                         player.SetSequence("FST4");
                     }
                     else
