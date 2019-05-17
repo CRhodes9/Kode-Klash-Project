@@ -34,43 +34,50 @@ namespace GameServer
             }
             catch (DirectoryNotFoundException)
             {
-                response = "Invalid Username!";
-                return response;
+                player = new Player(command[0]);
             }
 
+            switch (command[1].ToLower())
+            {
+                case "newaccount":
+                    response = "New Account Success";
 
-            if (command[1] == "LOGIN")
-            {
-                response = Login(command, player, address);
-            }
-            else if (command[1].ToLower() == "leaderboard")
-            {
-                int i = 1;
-                GameServer.leaderboard.TopTen.ForEach(p => response += string.Format("\n{0}. {1}({2}) {3} ({4}exp)", i++, p.Name, p.UserID, p.Level, p.Experience));
-            }
-            else
-            {
-                try
-                {
-                    Sequence sequence = (Sequence)Activator.CreateInstance(Type.GetType("GameServer.Sequences." + player.Sequence.Substring(0, 3)), player, command);
-                    response = sequence.Response;
-                    player.LastCommand = command;
-                    player.LastResponse = sequence.Response;
-                    response += string.Format("%%{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}/{9}/{10}/{11}/{12}/{13}%%", player.Name, player.Level, player.Experience, player.Gold, player.MaxHealth, player.CurrentHealth, player.MaxMana, player.CurrentMana, player.Strength, player.Dexterity, player.Constitution, player.Intelligence, player.Wisdom, player.Charisma);
-                    player.Items.ForEach(i => response += i.Name + "/");
-                    response += "%%";
-                    player.Spells.ForEach(s => response += s.Name + "/");
-                }
-                catch (ArgumentNullException)
-                {
-                    string error = "Error getting sequence! Setting to 'TWN1'. Contact an Admin if this continues. Player ID: " + player.UserID + " Sequence: " + player.Sequence.Substring(0, 3);
-                    response += error;
-                    GameServer.Log(error);
-                    player.SetSequence("TWN1");
-                }
-            }
+                    SaveJson(command[0], player);
+                    break;
+                case "login":
+                    response = Login(command, player, address);
 
-            SaveJson(command[0], player);
+                    SaveJson(command[0], player);
+                    break;
+                case "leaderboard":
+                    int i = 1;
+                    GameServer.leaderboard.TopTen.ForEach(p => response += string.Format("\n{0}. {1}({2}) {3} ({4}exp)", i++, p.Name, p.UserID, p.Level, p.Experience));
+                    break;
+                default:
+                    try
+                    {
+                        Sequence sequence = (Sequence)Activator.CreateInstance(Type.GetType("GameServer.Sequences." + player.Sequence.Substring(0, 3)), player, command);
+                        response = sequence.Response;
+                        player.LastCommand = command;
+                        player.LastResponse = sequence.Response;
+                        response += string.Format("%%{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}/{9}/{10}/{11}/{12}/{13}%%", player.Name, player.Level, player.Experience, player.Gold, player.MaxHealth, player.CurrentHealth, player.MaxMana, player.CurrentMana, player.Strength, player.Dexterity, player.Constitution, player.Intelligence, player.Wisdom, player.Charisma);
+                        player.Items.ForEach(item => response += item.Name + "/");
+                        response += "%%";
+                        player.Spells.ForEach(s => response += s.Name + "/");
+
+                        SaveJson(command[0], player);
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        string error = "Error getting sequence! Setting to 'TWN1'. Contact an Admin if this continues. Player ID: " + player.UserID + " Sequence: " + player.Sequence.Substring(0, 3);
+                        response += error;
+                        GameServer.Log(error);
+                        player.SetSequence("TWN1");
+
+                        SaveJson(command[0], player);
+                    }
+                    break;
+            }
             return response;
         }
 
@@ -172,7 +179,13 @@ namespace GameServer
         }
         private static void SaveJson(string userId, Player player)
         {
-            StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\Players\\" + userId + "\\stats.json", false);
+            string path = AppDomain.CurrentDomain.BaseDirectory + "\\Players\\" + userId + "\\";
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            StreamWriter sw = new StreamWriter(path + "stats.json", false);
             sw.Write(JsonConvert.SerializeObject(player));
             sw.Close();
         }

@@ -61,19 +61,19 @@ namespace GameClient
             string[] playerSpells = response[3].Split('/');
 
             player.Name = playerStats[0];
-                player.Level = int.Parse(playerStats[1]);
-                player.Experience = ulong.Parse(playerStats[2]);
-                player.Gold = int.Parse(playerStats[3]);
-                player.MaxHealth = int.Parse(playerStats[4]);
+            player.Level = int.Parse(playerStats[1]);
+            player.Experience = ulong.Parse(playerStats[2]);
+            player.Gold = int.Parse(playerStats[3]);
+            player.MaxHealth = int.Parse(playerStats[4]);
             player.CurrentHealth = int.Parse(playerStats[5]);
-                player.MaxMana = int.Parse(playerStats[6]);
-                player.CurrentMana = int.Parse(playerStats[7]);
-                player.Strength = int.Parse(playerStats[8]);
-                player.Dexterity = int.Parse(playerStats[9]);
-                player.Constitution = int.Parse(playerStats[10]);
-                player.Intelligence = int.Parse(playerStats[11]);
-                player.Wisdom = int.Parse(playerStats[12]);
-                player.Charisma = int.Parse(playerStats[13]);
+            player.MaxMana = int.Parse(playerStats[6]);
+            player.CurrentMana = int.Parse(playerStats[7]);
+            player.Strength = int.Parse(playerStats[8]);
+            player.Dexterity = int.Parse(playerStats[9]);
+            player.Constitution = int.Parse(playerStats[10]);
+            player.Intelligence = int.Parse(playerStats[11]);
+            player.Wisdom = int.Parse(playerStats[12]);
+            player.Charisma = int.Parse(playerStats[13]);
 
             UpdatePlayerTab(player);
             playerTab.Name = username;

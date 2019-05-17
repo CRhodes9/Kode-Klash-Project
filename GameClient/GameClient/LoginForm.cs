@@ -77,7 +77,7 @@ namespace GameClient
             {
             }
         }
-
+        
         private void Receive(Socket client)
         {
             try
@@ -139,6 +139,12 @@ namespace GameClient
             forgotPasswordLinkLabel.LinkVisited = true;
 
             System.Diagnostics.Process.Start("websiteurl");
+        }
+
+        private void NewUserLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            NewAccountForm newAccountForm = new NewAccountForm();
+            newAccountForm.ShowDialog();
         }
     }
 }
