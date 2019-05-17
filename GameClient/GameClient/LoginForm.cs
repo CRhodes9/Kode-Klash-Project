@@ -27,8 +27,8 @@ namespace GameClient
         {
             try
             {
-                IPHostEntry ipHostInfo = Dns.GetHostEntry("127.0.0.1");
-                IPAddress ipAddress = ipHostInfo.AddressList[0];
+                IPHostEntry ipHostInfo = Dns.GetHostEntry("studenthostsvr");
+                IPAddress ipAddress = ipHostInfo.AddressList[1];
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, 1900);
                 Socket client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 client.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), client);
@@ -47,6 +47,7 @@ namespace GameClient
                     ClientForm.username = username;
                     ClientForm.response = response;
                     Send(client, username);
+                    client.Close();
                     Close();
                 }
                 else if (response[0] == "Failure!")

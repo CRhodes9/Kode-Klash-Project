@@ -43,10 +43,11 @@ namespace GameServer
 
         public static void StartListening()
         {
-            IPHostEntry ipHostInfo = Dns.GetHostEntry("127.0.0.1");
-            IPAddress ipAddress = ipHostInfo.AddressList[0];
+            IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+            IPAddress ipAddress = ipHostInfo.AddressList[1];
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 1900);
-            
+            Console.WriteLine(ipHostInfo);
+            Console.WriteLine(ipAddress);
             Socket listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
  
             try

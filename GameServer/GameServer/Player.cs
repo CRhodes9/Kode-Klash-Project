@@ -13,9 +13,11 @@ namespace GameServer
         public string LastResponse { get; set; }
         public string[] LastCommand { get; set; }
         public bool FirstTime { get; set; }
-        public Player(string ID)
+
+        public Player(string ID, string password)
         {
             UserID = ID;
+            Password = password;
             Experience = 0;
             StatPoints = 0;
             Sequence = "NEW1";

@@ -17,7 +17,7 @@ namespace GameClient
         public static Socket client;
 
         public static string username;
-        public static string[] response;
+        public static string[] response = { "", "", "" };
         public static bool loginStatus = false;
 
         private static AutoResetEvent sendDone = new AutoResetEvent(false);
@@ -109,8 +109,8 @@ namespace GameClient
         #region Connection
         private void SendCommand(string command)
         {
-            ipHostInfo = Dns.GetHostEntry("127.0.0.1");
-            ipAddress = ipHostInfo.AddressList[0];
+            ipHostInfo = Dns.GetHostEntry("studenthostsvr");
+            ipAddress = ipHostInfo.AddressList[1];
             remoteEP = new IPEndPoint(ipAddress, 1900);
             client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             client.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), client);
@@ -126,6 +126,7 @@ namespace GameClient
             }
 
             outputRichTextBox.AppendText("\n\n" + response[0]);
+            client.Close();
         }
 
         public class StateObject

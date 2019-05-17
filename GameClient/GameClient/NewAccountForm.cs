@@ -29,8 +29,8 @@ namespace GameClient
         {
             if (passwordTextBox.Text == rePasswordTextBox.Text)
             {
-                IPHostEntry ipHostInfo = Dns.GetHostEntry("127.0.0.1");
-                IPAddress ipAddress = ipHostInfo.AddressList[0];
+                IPHostEntry ipHostInfo = Dns.GetHostEntry("studenthostsvr");
+                IPAddress ipAddress = ipHostInfo.AddressList[1];
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, 1900);
                 Socket client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 client.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), client);
@@ -46,6 +46,7 @@ namespace GameClient
                     MessageBox.Show("Account Created!");
                     Close();
                 }
+                client.Close();
             }
             else
             {

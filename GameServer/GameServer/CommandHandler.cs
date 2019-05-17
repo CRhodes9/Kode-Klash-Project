@@ -18,7 +18,7 @@ namespace GameServer
             Player player;
             string playerStatsJson;
             string path = AppDomain.CurrentDomain.BaseDirectory + "\\Players\\" + command[0];
-            try
+            if (Directory.Exists(path))
             {
                 StreamReader sr = new StreamReader(path + "\\stats.json");
 
@@ -32,9 +32,9 @@ namespace GameServer
 
                 player = JsonConvert.DeserializeObject<Player>(playerStatsJson);
             }
-            catch (DirectoryNotFoundException)
+            else
             {
-                player = new Player(command[0]);
+                player = new Player(command[0], GetMd5Hash(MD5.Create(), command[2]));
             }
 
             switch (command[1].ToLower())
