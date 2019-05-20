@@ -57,12 +57,14 @@ namespace GameServer.Sequences
                         }
                         else
                         {
-                            Response = "You don't have enough points!";
+                            Response = "You don't have enough points!" +
+                                "\nWhat is your Strength? (" + player.StatPoints + ")";
                         }
                     }
                     else
                     {
-                        Response = "Error! That's not a number.";
+                        Response = "Error! That's not a number." +
+                                "\nWhat is your Strength? (" + player.StatPoints + ")";
                     }
                     break;
                 case "4":
@@ -79,12 +81,14 @@ namespace GameServer.Sequences
                         }
                         else
                         {
-                            Response = "You don't have enough points!";
+                            Response = "You don't have enough points!" +
+                                "\nWhat is your Constitution? (" + player.StatPoints + ")";
                         }
                     }
                     else
                     {
-                        Response = "Error! That's not a number.";
+                        Response = "Error! That's not a number." +
+                                "\nWhat is your Constitution? (" + player.StatPoints + ")";
                     }
                     break;
                 case "5":
@@ -99,12 +103,14 @@ namespace GameServer.Sequences
                         }
                         else
                         {
-                            Response = "You don't have enough points!";
+                            Response = "You don't have enough points!" +
+                                "\nWhat is your Dexterity? (" + player.StatPoints + ")";
                         }
                     }
                     else
                     {
-                        Response = "Error! That's not a number.";
+                        Response = "Error! That's not a number." +
+                                "\nWhat is your Dexterity? (" + player.StatPoints + ")";
                     }
                     break;
                 case "6":
@@ -120,12 +126,14 @@ namespace GameServer.Sequences
                         }
                         else
                         {
-                            Response = "You don't have enough points!";
+                            Response = "You don't have enough points!" +
+                                "\nWhat is your Intelligence? (" + player.StatPoints + ")";
                         }
                     }
                     else
                     {
-                        Response = "Error! That's not a number.";
+                        Response = "Error! That's not a number." +
+                                "\nWhat is your Intelligence? (" + player.StatPoints + ")";
                     }
                     break;
                 case "7":
@@ -143,12 +151,14 @@ namespace GameServer.Sequences
                         }
                         else
                         {
-                            Response = "You don't have enough points!";
+                            Response = "You don't have enough points!" +
+                                "\nWhat is your Wisdom? (" + player.StatPoints + ")";
                         }
                     }
                     else
                     {
-                        Response = "Error! That's not a number.";
+                        Response = "Error! That's not a number." +
+                                "\nWhat is your Wisdom? (" + player.StatPoints + ")";
                     }
                     break;
                 case "8":
@@ -172,12 +182,14 @@ namespace GameServer.Sequences
                         }
                         else
                         {
-                            Response = "You don't have enough points!";
+                            Response = "You don't have enough points!" +
+                                "\nWhat is your Charisma? (" + player.StatPoints + ")";
                         }
                     }
                     else
                     {
-                        Response = "Error! That's not a number.";
+                        Response = "Error! That's not a number." +
+                                "\nWhat is your Charisma? (" + player.StatPoints + ")";
                     }
                     break;
                 case "9":

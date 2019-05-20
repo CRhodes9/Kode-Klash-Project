@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Security;
-
-namespace GameServer
+﻿namespace GameServer
 {
     public class Player : Creature
     {

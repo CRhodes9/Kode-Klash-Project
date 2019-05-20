@@ -33,7 +33,6 @@
             this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.loginButton = new System.Windows.Forms.Button();
-            this.forgotPasswordLinkLabel = new System.Windows.Forms.LinkLabel();
             this.newUserLinkLabel = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
@@ -80,18 +79,6 @@
             this.loginButton.UseVisualStyleBackColor = true;
             this.loginButton.Click += new System.EventHandler(this.LoginButton_Click);
             // 
-            // forgotPasswordLinkLabel
-            // 
-            this.forgotPasswordLinkLabel.AutoSize = true;
-            this.forgotPasswordLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.forgotPasswordLinkLabel.Location = new System.Drawing.Point(71, 57);
-            this.forgotPasswordLinkLabel.Name = "forgotPasswordLinkLabel";
-            this.forgotPasswordLinkLabel.Size = new System.Drawing.Size(81, 12);
-            this.forgotPasswordLinkLabel.TabIndex = 5;
-            this.forgotPasswordLinkLabel.TabStop = true;
-            this.forgotPasswordLinkLabel.Text = "Forgot Password?";
-            this.forgotPasswordLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ForgotPasswordLinkLabel_LinkClicked);
-            // 
             // newUserLinkLabel
             // 
             this.newUserLinkLabel.AutoSize = true;
@@ -111,7 +98,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(235, 138);
             this.Controls.Add(this.newUserLinkLabel);
-            this.Controls.Add(this.forgotPasswordLinkLabel);
             this.Controls.Add(this.loginButton);
             this.Controls.Add(this.passwordTextBox);
             this.Controls.Add(this.label2);
@@ -133,7 +119,6 @@
         private System.Windows.Forms.TextBox passwordTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button loginButton;
-        private System.Windows.Forms.LinkLabel forgotPasswordLinkLabel;
         private System.Windows.Forms.LinkLabel newUserLinkLabel;
     }
 }

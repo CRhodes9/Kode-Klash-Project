@@ -23,11 +23,14 @@ namespace GameClient
             StartClient();
         }
 
+        #region Connection
         private void StartClient()
         {
             try
             {
-                IPHostEntry ipHostInfo = Dns.GetHostEntry("studenthostsvr");
+                //Establish a new connection to the server
+                //Default CTC Computer Programming Server is 'studenthostsvr', set to '127.0.0.1' if server is hosted locally
+                IPHostEntry ipHostInfo = Dns.GetHostEntry("127.0.0.1");
                 IPAddress ipAddress = ipHostInfo.AddressList[1];
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, 1900);
                 Socket client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -36,12 +39,12 @@ namespace GameClient
 
                 string username = usernameTextBox.Text;
                 string password = passwordTextBox.Text;
-
+                //Sends the login command to the server, along with the username and password the user input
                 Send(client, usernameTextBox.Text + "%%" + "LOGIN%%" + password);
                 sendDone.WaitOne(500);
                 Receive(client);
                 receiveDone.WaitOne(500);
-
+                //If the server returned that the login was successful
                 if (response[0] == "Success!")
                 {
                     ClientForm.username = username;
@@ -52,7 +55,7 @@ namespace GameClient
                 }
                 else if (response[0] == "Failure!")
                 {
-
+                    MessageBox.Show("Failed to log in!");
                 }
             }
             catch (Exception e)
@@ -60,6 +63,7 @@ namespace GameClient
                 Console.WriteLine(e);
             }
         }
+        //Microsoft example used for client/server connection, understood enough to use it, but not comment it :)
         public class StateObject
         {
             public Socket workSocket = null;
@@ -135,17 +139,11 @@ namespace GameClient
             }
         }
 
-        private void ForgotPasswordLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            forgotPasswordLinkLabel.LinkVisited = true;
-
-            System.Diagnostics.Process.Start("websiteurl");
-        }
-
         private void NewUserLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             NewAccountForm newAccountForm = new NewAccountForm();
             newAccountForm.ShowDialog();
         }
+        #endregion Connection
     }
 }

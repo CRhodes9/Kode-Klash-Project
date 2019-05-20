@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameServer
+﻿namespace GameServer
 {
     public class Weapon : Item
     {
         public int Attack { get; set; }
+        public int Armor { get; set; }
 
         public Weapon()
         {
@@ -17,6 +12,7 @@ namespace GameServer
             SellPrice = 0;
             BuyPrice = 0;
             Attack = 0;
+            Armor = 0;
         }
     }
 }

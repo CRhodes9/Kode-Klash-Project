@@ -63,7 +63,10 @@ namespace GameServer.Sequences
 
                     if (combatResponse.StartsWith("You won! ", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        Response += combatResponse;
+                        Response += combatResponse +
+                            "\nIn front of you are two paths." +
+                            "\nWhere will you go?" +
+                            "\n(L)eft Path (R)ight Path";
                         player.SetSequence("FST4");
                     }
                     else if (combatResponse.StartsWith("You escaped ", StringComparison.InvariantCultureIgnoreCase))
@@ -77,9 +80,7 @@ namespace GameServer.Sequences
                     }
                     break;
                 case "4":
-                    Response = "In front of you are two paths." +
-                            "\nWhere will you go?" +
-                            "\n(L)eft Path (R)ight Path";
+                    Response = "That's the end of the demo!! :)";
                     break;
                 case "5":
                     break;

@@ -32,12 +32,12 @@
             this.inputTextBox = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.sendButton = new System.Windows.Forms.Button();
-            this.playerSpellsTabRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.playerItemsTabRichTextBox = new System.Windows.Forms.RichTextBox();
             this.playerTabPlayerInfoRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.playerItemsTabRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.playerSpellsTabRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.sendButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -47,7 +47,7 @@
             // outputRichTextBox
             // 
             this.outputRichTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.outputRichTextBox.Font = new System.Drawing.Font("DejaVu Sans Mono", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.outputRichTextBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.outputRichTextBox.HideSelection = false;
             this.outputRichTextBox.Location = new System.Drawing.Point(12, 12);
             this.outputRichTextBox.Name = "outputRichTextBox";
@@ -87,6 +87,15 @@
             this.tabPage1.Text = "Username";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // playerTabPlayerInfoRichTextBox
+            // 
+            this.playerTabPlayerInfoRichTextBox.Location = new System.Drawing.Point(4, 5);
+            this.playerTabPlayerInfoRichTextBox.Name = "playerTabPlayerInfoRichTextBox";
+            this.playerTabPlayerInfoRichTextBox.ReadOnly = true;
+            this.playerTabPlayerInfoRichTextBox.Size = new System.Drawing.Size(252, 360);
+            this.playerTabPlayerInfoRichTextBox.TabIndex = 2;
+            this.playerTabPlayerInfoRichTextBox.Text = "";
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.playerItemsTabRichTextBox);
@@ -97,6 +106,15 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Items";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // playerItemsTabRichTextBox
+            // 
+            this.playerItemsTabRichTextBox.Location = new System.Drawing.Point(4, 5);
+            this.playerItemsTabRichTextBox.Name = "playerItemsTabRichTextBox";
+            this.playerItemsTabRichTextBox.ReadOnly = true;
+            this.playerItemsTabRichTextBox.Size = new System.Drawing.Size(252, 360);
+            this.playerItemsTabRichTextBox.TabIndex = 1;
+            this.playerItemsTabRichTextBox.Text = "";
             // 
             // tabPage3
             // 
@@ -109,16 +127,6 @@
             this.tabPage3.Text = "Spells";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // sendButton
-            // 
-            this.sendButton.Location = new System.Drawing.Point(822, 542);
-            this.sendButton.Name = "sendButton";
-            this.sendButton.Size = new System.Drawing.Size(46, 23);
-            this.sendButton.TabIndex = 3;
-            this.sendButton.Text = "Send";
-            this.sendButton.UseVisualStyleBackColor = true;
-            this.sendButton.Click += new System.EventHandler(this.SendButton_Click);
-            // 
             // playerSpellsTabRichTextBox
             // 
             this.playerSpellsTabRichTextBox.Location = new System.Drawing.Point(4, 5);
@@ -128,23 +136,15 @@
             this.playerSpellsTabRichTextBox.TabIndex = 0;
             this.playerSpellsTabRichTextBox.Text = "";
             // 
-            // playerItemsTabRichTextBox
+            // sendButton
             // 
-            this.playerItemsTabRichTextBox.Location = new System.Drawing.Point(4, 5);
-            this.playerItemsTabRichTextBox.Name = "playerItemsTabRichTextBox";
-            this.playerItemsTabRichTextBox.ReadOnly = true;
-            this.playerItemsTabRichTextBox.Size = new System.Drawing.Size(252, 360);
-            this.playerItemsTabRichTextBox.TabIndex = 1;
-            this.playerItemsTabRichTextBox.Text = "";
-            // 
-            // playerTabPlayerInfoRichTextBox
-            // 
-            this.playerTabPlayerInfoRichTextBox.Location = new System.Drawing.Point(4, 5);
-            this.playerTabPlayerInfoRichTextBox.Name = "playerTabPlayerInfoRichTextBox";
-            this.playerTabPlayerInfoRichTextBox.ReadOnly = true;
-            this.playerTabPlayerInfoRichTextBox.Size = new System.Drawing.Size(252, 360);
-            this.playerTabPlayerInfoRichTextBox.TabIndex = 2;
-            this.playerTabPlayerInfoRichTextBox.Text = "";
+            this.sendButton.Location = new System.Drawing.Point(822, 542);
+            this.sendButton.Name = "sendButton";
+            this.sendButton.Size = new System.Drawing.Size(46, 23);
+            this.sendButton.TabIndex = 3;
+            this.sendButton.Text = "Send";
+            this.sendButton.UseVisualStyleBackColor = true;
+            this.sendButton.Click += new System.EventHandler(this.SendButton_Click);
             // 
             // ClientForm
             // 

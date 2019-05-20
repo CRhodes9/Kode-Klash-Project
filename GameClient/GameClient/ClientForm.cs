@@ -29,9 +29,9 @@ namespace GameClient
 
             LoginForm loginForm = new LoginForm();
             loginForm.ShowDialog();
-
+            //Split the player stats received from the server
             string[] playerStats = response[2].Split('/');
-
+            //Create a new Player object based off the stats to fill out the player info tabs
             player = new Player()
             {
                 Name = playerStats[0],
@@ -52,6 +52,7 @@ namespace GameClient
 
             outputRichTextBox.AppendText(response[1]);
         }
+        //Fill out the player info tabs
         private void UpdatePlayerInfo()
         {
             TabPage playerTab = tabControl1.TabPages[0];
@@ -59,21 +60,6 @@ namespace GameClient
             string[] playerStats = response[1].Split('/');
             string[] playerItems = response[2].Split('/');
             string[] playerSpells = response[3].Split('/');
-
-            player.Name = playerStats[0];
-            player.Level = int.Parse(playerStats[1]);
-            player.Experience = ulong.Parse(playerStats[2]);
-            player.Gold = int.Parse(playerStats[3]);
-            player.MaxHealth = int.Parse(playerStats[4]);
-            player.CurrentHealth = int.Parse(playerStats[5]);
-            player.MaxMana = int.Parse(playerStats[6]);
-            player.CurrentMana = int.Parse(playerStats[7]);
-            player.Strength = int.Parse(playerStats[8]);
-            player.Dexterity = int.Parse(playerStats[9]);
-            player.Constitution = int.Parse(playerStats[10]);
-            player.Intelligence = int.Parse(playerStats[11]);
-            player.Wisdom = int.Parse(playerStats[12]);
-            player.Charisma = int.Parse(playerStats[13]);
 
             UpdatePlayerTab(player);
             playerTab.Name = username;
@@ -109,7 +95,7 @@ namespace GameClient
         #region Connection
         private void SendCommand(string command)
         {
-            ipHostInfo = Dns.GetHostEntry("studenthostsvr");
+            ipHostInfo = Dns.GetHostEntry("127.0.0.1");
             ipAddress = ipHostInfo.AddressList[1];
             remoteEP = new IPEndPoint(ipAddress, 1900);
             client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);

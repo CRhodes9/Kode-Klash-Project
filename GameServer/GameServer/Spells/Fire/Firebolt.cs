@@ -1,9 +1,4 @@
 ﻿using GameServer.Enemies;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameServer.Spells
 {
@@ -18,7 +13,7 @@ namespace GameServer.Spells
 
         public void Cast(ref Player player, ref Enemy enemy)
         {
-
+            player.Hurt(enemy.Intelligence);
         }
     }
 }

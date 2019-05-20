@@ -28,8 +28,10 @@ namespace GameServer
         public Legs Legs { get; set; }
         public Boots Boots { get; set; }
         public Weapon Weapon { get; set; }
+        //Creature damage is calculated by their Weapon Attack + Strength
         public int Damage { get { return Weapon.Attack + Strength; } }
-        public int Armor { get { return Helmet.Defense + Chest.Defense + Legs.Defense + Boots.Defense; } }
+        //Creature defense is calculated by their Weapon Armor + their total equipment defense
+        public int Armor { get { return Weapon.Armor + Helmet.Defense + Chest.Defense + Legs.Defense + Boots.Defense; } }
 
         public Creature()
         {
@@ -79,17 +81,23 @@ namespace GameServer
         {
             Charisma += amount;
         }
+        public void AddItem(Item item)
+        {
+            Items.Add(item);
+        }
         public void AddSpell(Spell spell)
         {
             Spells.Add(spell);
         }
+
         public int Attack(Creature target)
         {
+            //Attack damage is a random number in range of the player's ((Strength + Weapon Damage) +- Dexterity) - (Target's Armor + Defense)
             Random ranGen = new Random();
             int attackDamage = ranGen.Next(Damage - Dexterity, Damage + Dexterity);
             int armor = target.Armor;
             int attackTotal = attackDamage - armor;
-
+            //If the armor lowers the attack below 0, the attack does 0, not negative damage
             if (attackTotal < 0)
             {
                 attackTotal = 0;
@@ -99,6 +107,7 @@ namespace GameServer
         }
         public void Hurt(int damage)
         {
+            //If the creature would be damaged a negative amount, do 0 damage instead of healing them
             if (damage < 0)
             {
                 damage = 0;

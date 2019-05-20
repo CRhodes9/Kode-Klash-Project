@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameServer
+﻿namespace GameServer
 {
     public class Armor : Item
     {
         public int Defense { get; set; }
     }
+    //Armor equipment slots
     public class Helmet : Armor
     {
         public Helmet()

@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameServer
 {
@@ -17,7 +15,7 @@ namespace GameServer
             List<Player> playerList = new List<Player>();
             string path = AppDomain.CurrentDomain.BaseDirectory + "\\Players\\";
             string[] playerFiles = Directory.GetFiles(path);
-
+            //Go through each player and creates a Player object out of their Json file
             foreach (string fileName in playerFiles)
             {
                 Player player;
@@ -43,9 +41,9 @@ namespace GameServer
                 {
                 }
             }
-
+            //Order the players by Highest Level to Lowest Level, then Highest Experience to Lowest Experience
             playerList.OrderByDescending(p => p.Level).ThenBy(p => p.Experience);
-
+            //Create a Top 10, or as many as exist if less than 10, List of the highest Leveled players
             if (playerList.Count >= 10)
             {
                 for (int i = 0; i < 10; i++)

@@ -17,15 +17,17 @@ namespace GameServer
 
         public static void Main()
         {
+            //Update the Leaderboard when the server starts up and create a new Thread to Update the Leaderboard daily.
             leaderboard.Refresh();
 
             Thread thread = new Thread(LeaderboardUpdate);
-
+            //Begin listening for new connections
             StartListening();
         }
 
         public static void LeaderboardUpdate()
         {
+            //Thread sleep while not midnight
             while (DateTime.Today.TimeOfDay.Ticks != 0)
             {
                 Thread.Sleep(1);
@@ -35,6 +37,8 @@ namespace GameServer
 
         public static void Log(string mes)
         {
+            //|Logs
+            //\    YYYY - MM - DD.log
             StreamWriter sw = new StreamWriter(string.Format("{0}\\Logs\\{1}-{2}-{3}.log", AppDomain.CurrentDomain.BaseDirectory, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day), true);
             sw.Write("[" + DateTime.Now.TimeOfDay + "] " + mes + "\n");
             sw.Close();
@@ -43,15 +47,15 @@ namespace GameServer
 
         public static void StartListening()
         {
+            //Get the connection info for hosting the server
             IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
             IPAddress ipAddress = ipHostInfo.AddressList[1];
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 1900);
-            Console.WriteLine(ipHostInfo);
-            Console.WriteLine(ipAddress);
             Socket listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
  
             try
             {
+                //Begin listening on the socket
                 listener.Bind(localEndPoint);
                 listener.Listen(100);
                 Log("Game Server started!");
@@ -72,6 +76,7 @@ namespace GameServer
             Console.Read();
         }
 
+        //Microsoft example used for client/server connection, understood enough to use it, but not comment it :)
         public class StateObject
         {
             public Socket workSocket = null;

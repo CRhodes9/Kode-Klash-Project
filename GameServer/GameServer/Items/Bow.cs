@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameServer.Items
+﻿namespace GameServer.Items
 {
-    class Bow : Item
+    class Bow : Weapon
     {
+        public Bow()
+        {
+            Name = "Bow";
+            Description = "A basic bow";
+            SellPrice = 1;
+            BuyPrice = 5;
+            Attack = 5;
+            Armor = 0;
+        }
     }
 }

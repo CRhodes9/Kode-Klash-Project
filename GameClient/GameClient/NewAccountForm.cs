@@ -29,13 +29,14 @@ namespace GameClient
         {
             if (passwordTextBox.Text == rePasswordTextBox.Text)
             {
-                IPHostEntry ipHostInfo = Dns.GetHostEntry("studenthostsvr");
+                IPHostEntry ipHostInfo = Dns.GetHostEntry("127.0.0.1");
                 IPAddress ipAddress = ipHostInfo.AddressList[1];
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, 1900);
                 Socket client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 client.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), client);
 
                 connectDone.WaitOne(500);
+                //Send the New Account command to the server to create a new account for the player
                 Send(client, usernameTextBox.Text + "%%" + "NEWACCOUNT%%" + passwordTextBox.Text);
                 sendDone.WaitOne(500);
                 Receive(client);
@@ -53,6 +54,7 @@ namespace GameClient
                 MessageBox.Show("Passwords do not match!");
             }
         }
+        #region Connection
         public class StateObject
         {
             public Socket workSocket = null;
@@ -127,5 +129,6 @@ namespace GameClient
             {
             }
         }
+        #endregion Connection
     }
 }
