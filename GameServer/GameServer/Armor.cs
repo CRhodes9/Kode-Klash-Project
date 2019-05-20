@@ -1,5 +1,6 @@
 ﻿namespace GameServer
 {
+	//
     public class Armor : Item
     {
         public int Defense { get; set; }
