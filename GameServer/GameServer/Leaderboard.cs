@@ -13,8 +13,8 @@ namespace GameServer
         public void Refresh()
         {
             List<Player> playerList = new List<Player>();
-            string path = AppDomain.CurrentDomain.BaseDirectory + "\\Players\\";
-            string[] playerFiles = Directory.GetFiles(path);
+            string path = AppDomain.CurrentDomain.BaseDirectory + "Players\\";
+            string[] playerFiles = Directory.GetDirectories(path);
             //Go through each player and creates a Player object out of their Json file
             foreach (string fileName in playerFiles)
             {
@@ -23,7 +23,7 @@ namespace GameServer
 
                 try
                 {
-                    StreamReader sr = new StreamReader(path + fileName + "\\stats.json");
+                    StreamReader sr = new StreamReader(fileName + "\\stats.json");
 
                     playerStatsJson = sr.ReadLine();
 

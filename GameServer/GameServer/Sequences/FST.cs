@@ -1,10 +1,6 @@
 ﻿using GameServer.Enemies;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameServer.Sequences
 {
@@ -81,16 +77,6 @@ namespace GameServer.Sequences
                     break;
                 case "4":
                     Response = "That's the end of the demo!! :)";
-                    break;
-                case "5":
-                    break;
-                case "6":
-                    break;
-                case "7":
-                    break;
-                case "8":
-                    break;
-                case "9":
                     break;
             }
         }

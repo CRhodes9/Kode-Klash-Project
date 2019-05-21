@@ -9,7 +9,7 @@ namespace GameServer
 {
     class CommandHandler
     {
-        private static string response = "\n";
+        private static string response;
 
         public static string Process(string address, string[] command)
         {
@@ -68,6 +68,7 @@ namespace GameServer
                     break;
                 case "leaderboard":
                     int i = 1;
+                    response = "\n";
                     GameServer.leaderboard.TopTen.ForEach(p => response += string.Format("\n{0}. {1}({2}) {3} ({4}exp)", i++, p.Name, p.UserID, p.Level, p.Experience));
                     break;
                 //This will 100% break if you try and log in with an account that doesn't exist, I think
