@@ -130,6 +130,7 @@ namespace GameClient
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
             }
         }
 
@@ -144,6 +145,7 @@ namespace GameClient
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
             }
         }
 
