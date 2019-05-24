@@ -22,6 +22,7 @@ namespace GameClient
 
         private static AutoResetEvent sendDone = new AutoResetEvent(false);
         private static AutoResetEvent receiveDone = new AutoResetEvent(false);
+        private static ManualResetEvent connectDone = new ManualResetEvent(false);
 
         public ClientForm()
         {
@@ -95,22 +96,18 @@ namespace GameClient
         #region Connection
         private void SendCommand(string command)
         {
-            ipHostInfo = Dns.GetHostEntry("127.0.0.1");
+            ipHostInfo = Dns.GetHostEntry("studenthostsvr");
             ipAddress = ipHostInfo.AddressList[1];
             remoteEP = new IPEndPoint(ipAddress, 1900);
             client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             client.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), client);
-
+            connectDone.WaitOne(500);
             Send(client, username + "%%" + command);
             sendDone.WaitOne(500);
             Receive(client);
             receiveDone.WaitOne(500);
 
-            if (response.Length > 2)
-            {
-                UpdatePlayerInfo();
-            }
-
+            UpdatePlayerInfo();
             outputRichTextBox.AppendText("\n\n" + response[0]);
             client.Close();
         }

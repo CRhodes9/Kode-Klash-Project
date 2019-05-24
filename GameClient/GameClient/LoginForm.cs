@@ -30,7 +30,7 @@ namespace GameClient
             {
                 //Establish a new connection to the server
                 //Default CTC Computer Programming Server is 'studenthostsvr', set to '127.0.0.1' if server is hosted locally
-                IPHostEntry ipHostInfo = Dns.GetHostEntry("127.0.0.1");
+                IPHostEntry ipHostInfo = Dns.GetHostEntry("studenthostsvr");
                 IPAddress ipAddress = ipHostInfo.AddressList[1];
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, 1900);
                 Socket client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);

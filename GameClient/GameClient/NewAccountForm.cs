@@ -29,7 +29,7 @@ namespace GameClient
         {
             if (passwordTextBox.Text == rePasswordTextBox.Text)
             {
-                IPHostEntry ipHostInfo = Dns.GetHostEntry("127.0.0.1");
+                IPHostEntry ipHostInfo = Dns.GetHostEntry("studenthostsvr");
                 IPAddress ipAddress = ipHostInfo.AddressList[1];
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, 1900);
                 Socket client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);

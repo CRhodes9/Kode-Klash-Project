@@ -339,3 +339,4 @@ GameServer/GameServer/App.config
 GameClient/GameClient/Properties/AssemblyInfo.cs
 *.config
 GameServer/GameServer/Properties/AssemblyInfo.cs
+GameClient.exe
